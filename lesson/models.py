@@ -22,6 +22,11 @@ class Lesson(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    @property
+    def get_image(self):
+        return self.image.url
+    
 
 
 class LessonAdmin(admin.ModelAdmin):

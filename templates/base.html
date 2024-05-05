@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+</head>
+<body class="homepage is-preload">
+    <div id="page-wrapper">
+
+<!-- Header -->
+<section id="header">
+
+    <!-- Logo -->
+        <h1><a href="index.html">TILBIL</a></h1>
+
+    <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li class="current"><a href="index.html">Home</a></li>
+                <li>
+                    <a href="#">Настройки</a>
+                    <ul>
+                        <li><a href="#">Lorem ipsum dolor</a></li>
+                        <li><a href="#">Magna phasellus</a></li>
+                        <li><a href="#">Etiam dolore nisl</a></li>
+                        <li>
+                            <a href="#">Phasellus consequat</a>
+                            <ul>
+                                <li><a href="#">Magna phasellus</a></li>
+                                <li><a href="#">Etiam dolore nisl</a></li>
+                                <li><a href="#">Veroeros feugiat</a></li>
+                                <li><a href="#">Nisl sed aliquam</a></li>
+                                <li><a href="#">Dolore adipiscing</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Veroeros feugiat</a></li>
+                    </ul>
+                </li>
+                <li><a href="left-sidebar.html">Рейтинг</a></li>
+                <li><a href="right-sidebar.html">Профиль</a></li>
+            </ul>
+        </nav>
+</section>
+        {% block content %} {% endblock %}
+
+
+
+<!-- Footer -->
+<section id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 col-12-medium">
+                <section>
+                    <header>
+                        <h2>Vitae tempor lorem</h2>
+                    </header>
+                    <ul class="social">
+                        <li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
+                        <li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+                        <li><a class="icon brands fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
+                        <li><a class="icon brands fa-tumblr" href="#"><span class="label">Tumblr</span></a></li>
+                        <li><a class="icon brands fa-linkedin-in" href="#"><span class="label">LinkedIn</span></a></li>
+                    </ul>
+                    <ul class="contact">
+                        <li>
+                            <h3>Address</h3>
+                            <p>
+                                Untitled Incorporated<br />
+                                1234 Somewhere Road Suite<br />
+                                Nashville, TN 00000-0000
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Mail</h3>
+                            <p><a href="#">someone@untitled.tld</a></p>
+                        </li>
+                        <li>
+                            <h3>Phone</h3>
+                            <p>(800) 000-0000</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
