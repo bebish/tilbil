@@ -1,0 +1,30 @@
+.lesson-test{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Для выравнивания текста по центру внутри div */
+    margin: 0 auto; /* Для центрирования по горизонтали */
+    padding: 20px; /* Добавьте отступы по вашему желанию */
+    
+}
+
+.buttons-row {
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Отступ между кнопками */
+}
+
+.text-center {
+    margin-top: 10%;
+    margin-bottom: 3%;
+}
+
+.lesson-test .test-container {
+    display: none; /* Скрываем все тесты по умолчанию */
+}
+
+.lesson-test .test-container.active {
+    display: block; /* Показываем активный тест */
+}
