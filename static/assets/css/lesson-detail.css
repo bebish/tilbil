@@ -1,0 +1,19 @@
+.correct-answer {
+    background-color: green !important; /* Зеленый цвет для правильного ответа */
+}
+.incorrect-answer {
+    background-color: red !important; /* Красный цвет для неправильного ответа */
+}
+.test-container {
+    display: none;
+}
+.test-container.active {
+    display: block;
+}
+.chosen {
+    background-color: #d3d3d3;
+}
+.chosen-word {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}

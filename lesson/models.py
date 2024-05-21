@@ -13,11 +13,21 @@ class Question(models.Model):
 
     def __str__(self) -> str:
         return self.question_text
+    
+class FillInTheBlankQuestion(models.Model):
+    question_text = models.TextField()
+    correct_answer = models.TextField()  # правильные слова через пробел
+    blank_words = models.TextField()  # слова для выбора через запятую
+
+    def __str__(self) -> str:
+        return self.question_text
+
 
 class Lesson(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='lessons')
     name = models.CharField(max_length=60)
-    tests = models.ManyToManyField(Question, related_name='lessons')
+    tests = models.ManyToManyField(Question, related_name='lessons', blank=True)
+    fill_in_the_blank_tests = models.ManyToManyField(FillInTheBlankQuestion, related_name='lessons', blank = True)
     image = models.ImageField(upload_to='lessons',default='default_lesson.avif')
 
     def __str__(self) -> str:
@@ -27,7 +37,21 @@ class Lesson(models.Model):
     def get_image(self):
         return self.image.url
     
+    def check_answers(self, user_answers):
+        """
+        Проверяет ответы пользователя.
+
+        :param user_answers: Словарь, где ключи - ID вопросов, значения - ответы пользователя.
+        :return: Список с результатами проверки (True, если ответ правильный, иначе False).
+        """
+        results = []
+        for question in self.tests.all():
+            correct_answer = question.correct_answer
+            user_answer = user_answers.get(str(question.id), "")
+            results.append(correct_answer == user_answer)
+        return results
+    
 
 
 class LessonAdmin(admin.ModelAdmin):
-    filter_horizontal = ('tests',) 
+    filter_horizontal = ('tests','fill_in_the_blank_tests',) 

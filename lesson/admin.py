@@ -4,5 +4,6 @@ from .models import *
 
 admin.site.register(Question)
 admin.site.register(Lesson, LessonAdmin)
+admin.site.register(FillInTheBlankQuestion)
 
 
