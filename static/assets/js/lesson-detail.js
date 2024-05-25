@@ -34,6 +34,33 @@ $(document).ready(function() {
 }
 
 
+
+   // Для вопросов типа тест
+   $('.lesson-test .buttons-row button').click(function() {
+    var $this = $(this);
+    var $currentTest = $this.closest('.test-container');
+    var correctAnswer = $this.data('correct-answer');
+    var chosenAnswer = $this.text();
+    speakText(chosenAnswer)
+
+    if (chosenAnswer === correctAnswer) {
+        $this.addClass('correct-answer').removeClass('incorrect-answer');
+        setTimeout(function() {
+            $currentTest.addClass('completed correct');
+            $currentTest.removeClass('active');
+            showNextTest();
+        }, 1000);
+    } else {
+        $this.addClass('incorrect-answer').removeClass('correct-answer');
+        setTimeout(function() {
+            $currentTest.addClass('completed incorrect');
+            incorrectQuestions.push($currentTest); // Добавляем неправильный вопрос в массив
+            $currentTest.removeClass('active');
+            showNextTest();
+        }, 1000);
+    }
+});
+
     // Для вопросов типа fill-in-the-blank
     $('.fill-in-the-blank .word').click(function() {
         var $this = $(this);
@@ -73,23 +100,24 @@ $(document).ready(function() {
      
     });
 
-    // Для вопросов типа тест
-    $('.lesson-test .buttons-row button').click(function() {
-        var $this = $(this);
-        var $currentTest = $this.closest('.test-container');
-        var correctAnswer = $this.data('correct-answer');
-        var chosenAnswer = $this.text();
-        speakText(chosenAnswer)
+ 
 
-        if (chosenAnswer === correctAnswer) {
-            $this.addClass('correct-answer').removeClass('incorrect-answer');
+
+    // Для вопросов, где нужно ввести перевод
+    $('.translation-question button').click(function() {
+        var $currentTest = $(this).closest('.test-container');
+        var correctAnswer = $currentTest.find('.correct-answer').val().replace(/\s+/g, '').toLowerCase(); // Удаляем пробелы и переводим в нижний регистр
+        var userAnswer = $currentTest.find('.form-control').val().replace(/\s+/g, '').toLowerCase(); // Удаляем пробелы и переводим в нижний регистр
+        speakText(userAnswer);
+        if (userAnswer === correctAnswer) {
+            $currentTest.find('.form-control').addClass('correct-answer').removeClass('incorrect-answer');
             setTimeout(function() {
                 $currentTest.addClass('completed correct');
                 $currentTest.removeClass('active');
                 showNextTest();
             }, 1000);
         } else {
-            $this.addClass('incorrect-answer').removeClass('correct-answer');
+            $currentTest.find('.form-control').addClass('incorrect-answer').removeClass('correct-answer');
             setTimeout(function() {
                 $currentTest.addClass('completed incorrect');
                 incorrectQuestions.push($currentTest); // Добавляем неправильный вопрос в массив
@@ -98,6 +126,8 @@ $(document).ready(function() {
             }, 1000);
         }
     });
+
+
 
     function showNextTest() {
         var $nextTest = $('.test-container').not('.completed').first();
@@ -114,13 +144,19 @@ $(document).ready(function() {
                 $question.find('.word').removeClass('chosen'); // Сбрасываем выбор слов для fill-in-the-blank
                 $question.find('.chosen-words').empty(); // Очищаем выбранные слова для fill-in-the-blank
                 $question.find('.buttons-row button').removeClass('correct-answer incorrect-answer'); // Сбрасываем кнопки для тестов
+                $question.find('.form-control').removeClass('correct-answer incorrect-answer'); // Сбрасываем цвет кнопок
+                $question.find('.form-control').val(''); //очишаем форму
             });
             incorrectQuestions[0].addClass('active');
             var questionText = incorrectQuestions[0].find('.badge.text-bg-info').text();
             speakText(questionText);
             incorrectQuestions = []; // Очищаем массив неправильных вопросов
         } else {
-            alert('Вы завершили тест!');
+            alert("Сиз тестти бутурдунуз!")
+            
+            // var levelId = this.getAttribute('data-level-id');
+            // window.location.href = '/level/' + levelId + '/';
+            window.location.href = '/lesson'; // Перенаправление на главную страницу
         }
     }
     var firstQuestionText = $('.test-container.active').find('.badge.text-bg-info').text();

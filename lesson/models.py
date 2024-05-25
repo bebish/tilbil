@@ -1,7 +1,15 @@
 from django.db import models
 from django.contrib import admin
+from django.core.exceptions import ValidationError
 
-from language.models import Language
+from language.models import Language,Level
+
+
+# def validate_lessons_count(value):
+#     max_lessons = 12
+#     if value.lessons.count() >= max_lessons:
+#         raise ValidationError(f'Максимальное количество уроков для уровня {value.name} уже достигнуто.')
+
 
 
 class Question(models.Model):
@@ -22,12 +30,29 @@ class FillInTheBlankQuestion(models.Model):
     def __str__(self) -> str:
         return self.question_text
 
+class TranslateQuestion(models.Model):
+    question_text = models.TextField()
+    correct_answer = models.TextField()
+    user_answer = models.TextField(blank=True,null=True)
+
+    def __str__(self) -> str:
+        return self.question_text
+    
+
+class LessonCategory(models.Model):
+    title = models.TextField()
+    lesson_level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='categories',blank=True)
+
+
 
 class Lesson(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='lessons')
+    level = models.ForeignKey(Level,on_delete=models.CASCADE,related_name='lessons',default=1)
+    category = models.ForeignKey(LessonCategory, on_delete=models.CASCADE, related_name='lessons',default=1)
     name = models.CharField(max_length=60)
     tests = models.ManyToManyField(Question, related_name='lessons', blank=True)
     fill_in_the_blank_tests = models.ManyToManyField(FillInTheBlankQuestion, related_name='lessons', blank = True)
+    translate_tests = models.ManyToManyField(TranslateQuestion,related_name='lessons',blank=True)
     image = models.ImageField(upload_to='lessons',default='default_lesson.avif')
 
     def __str__(self) -> str:
@@ -54,4 +79,4 @@ class Lesson(models.Model):
 
 
 class LessonAdmin(admin.ModelAdmin):
-    filter_horizontal = ('tests','fill_in_the_blank_tests',) 
+    filter_horizontal = ('tests','fill_in_the_blank_tests','translate_tests',) 

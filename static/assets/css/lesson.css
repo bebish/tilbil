@@ -52,3 +52,61 @@
     margin-right: 5px;
     vertical-align: middle;
 }
+
+.lesson-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+.lesson-image {
+    flex: 0 0 300px;
+}
+.lesson-test-container {
+    flex: 1;
+}
+.test-container {
+    margin-bottom: 20px;
+}
+/* .question-header {
+    text-align: center;
+    margin-top: 10%;
+} */
+
+
+
+
+.test-lesson {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px; /* Отступ между картинкой и текстом, можно настроить */
+}
+
+.buttons-row2 {
+    display: flex;
+    flex-direction: column !important;
+    margin-top: 3%;
+    justify-content: center;
+    gap: 10px; /* Отступ между кнопками */
+}
+
+
+.question-header {
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 3%;
+    padding: 20px;
+    color: rgb(108, 106, 106);
+    position: relative; /* Для псевдоэлемента */
+
+
+}
+.question-header::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px; /* Толщина линии */
+    background-color: #777474; /* Цвет линии */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
