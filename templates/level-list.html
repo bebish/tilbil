@@ -1,0 +1,43 @@
+
+{% extends 'base.html' %}	
+{% load static %}			
+{% block content %}	
+<!-- Main -->
+<section id="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+
+				<!-- Portfolio -->
+					<section>
+						<header class="major">
+							<h2>Levels</h2>
+						</header>
+
+						
+						<div class="row">
+							{% for level in levels %}
+							<div class="col-4 col-6-medium col-12-small">
+								<section class="box">
+									<a href="#" class="image featured"><img src="{{ level.get_image }}" style="width: 340px; height: 200px;" alt="" /></a>
+									<header>
+										<h3>{{ level }}</h3>
+									</header>
+									<p>{{ level.description }}</p>
+									<footer>
+										<ul class="actions">
+                                            <li><a href="{% url 'level-detail-view' level.id %}" class="button alt">Start</a></li>
+										</ul>
+									</footer>
+								</section>
+							</div>
+							{% endfor %}
+						</div>
+						
+
+					</section>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
