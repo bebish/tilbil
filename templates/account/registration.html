@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <h1>Sign up</h1>
-<form class="container" method="post"  enctype="multipart/form-data">
+<form class="container" style="width:700px;" method="post"  enctype="multipart/form-data">
     {% csrf_token %}
     <div class="p-3 mb-2 bg-light">
     {{ form.as_p }}

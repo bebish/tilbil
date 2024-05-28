@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
 
 from .models import User
 
@@ -33,6 +34,10 @@ class RegistrationForm(forms.ModelForm):
         return data
 
     def save(self, commit=True):
-        print(self.cleaned_data)
         user = User.objects.create_user(**self.cleaned_data)
         return user
+
+class ProfileEditForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'image')
