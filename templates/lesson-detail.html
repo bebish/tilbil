@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'assets/css/lesson.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/lesson-detail.css' %}" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <style>
         
@@ -119,7 +121,7 @@
                 <div class="lesson-test-container">
                     <div class="lesson-test">
                         {% for translate_test in translate_tests %}
-                        <div id="test{{ translate_test.id }}" class="test-container {% if not fill_in_the_blank_tests and forloop.first %}active{% endif %}">
+                        <div id="test{{ translate_test.id }}" class="test-container {% if not fill_in_the_blank_tests and not tests and forloop.first %}active{% endif %}">
                             <h1 class="question-header">Суйломду котор</h1>
                             <div class="test-lesson">
                                 <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
@@ -142,6 +144,45 @@
             </div>
 
 
+            <div class="lesson-container">
+                <div class="lesson-test-container">
+                    <div class="lesson-test">
+                        {% for listen_test in listen_tests %}
+                        <div id="test{{ listen_test.id }}" class="test-container {% if not fill_in_the_blank_tests and not tests and not translate_tests and forloop.first %}active{% endif %}">
+                            <h1 class="question-header">Суйломду угуп туура туз</h1>
+                            <div class="test-lesson">
+                                <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
+                                <button type="button" style="width: 40px; height: 40px; border: 2px solid #1e90ff; text-align: center; line-height: 36px; background-color: #23aae4; border-radius: 8px;">
+                                    <i class="fa-solid fa-volume-high" style="color:#060606 ;font-size: 24px;"></i>
+                                </button>
+                            </div>
+                            <div class="listen_text" listen-text="{{ listen_test.question_text }}">
+                            </div>
+                            <br>
+
+                            <div class="listen-test" data-correct-answer="{{ listen_test.correct_answer }}">
+                                {% for word in listen_test.blank_words %}
+                                <button type="button" class="btn btn-outline-secondary word">{{ word }}</button>
+                                {% endfor %}
+                            </div>
+                            <div class="chosen-words mt-2">
+                                <!-- выбранные пользователем слова будут отображаться здесь -->
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="level-button" data-level-id="{{ lesson.level_id }}">
+            </div>
+            <div class="language-button" data-language-id="{{ lesson.language_id }}">
+            </div>
+            
+
     
 
 
@@ -150,29 +191,3 @@
 
 </body>
 </html>
-
-
-
-
-
-            <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var testContainers = document.querySelectorAll('.test-container');
-
-                testContainers.forEach(function(container) {
-                    var textarea = container.querySelector('.form-control');
-                    var correctAnswer = container.querySelector('.correct-answer').value;
-                    var button = container.querySelector('.btn');
-
-                    button.addEventListener('click', function() {
-                        var userAnswer = textarea.value.trim().toLowerCase();
-                        if (userAnswer === correctAnswer) {
-                            alert('Ответ правильный!');
-                        } else {
-                            alert('Ответ неправильный. Попробуйте снова.');
-                        }
-                    });
-                });
-            });
-            </script> -->

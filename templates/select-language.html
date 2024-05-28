@@ -1,0 +1,69 @@
+
+{% extends 'base.html' %}	
+{% load static %}			
+{% block content %}	
+
+{% if request.user.is_authenticated %}
+<!-- Main -->
+<section id="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+
+				<!-- Portfolio -->
+					<section>
+						<header class="major">
+							<h2>Курстар</h2>
+						</header>
+
+						
+						<div class="row">
+							{% for language in languages %}
+							<div class="col-4 col-6-medium col-12-small">
+								<section class="box">
+									<a href="#" class="image featured"><img src="{{ language.get_image }}" style="width: 340px; height: 200px;" alt="" /></a>
+									<header>
+										<h3>{{ language }}</h3>
+									</header>
+									<footer>
+										<ul class="actions">
+                                            <li><a href="{% url 'language-detail' language.id %}" class="button alt">Start</a></li>
+										</ul>
+									</footer>
+								</section>
+							</div>
+							{% endfor %}
+						</div>
+						
+
+					</section>
+			</div>
+		</div>
+	</div>
+</section>
+{% else %}
+<!-- Main -->
+<section id="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+
+				<!-- Portfolio -->
+					<section>
+						<header class="major">
+							<h2>Курстар</h2>
+						</header>
+
+						<h1>Курстарга мумкундук алуу учун аккаунтка кириниз!</h1>
+						
+
+					</section>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+{% endif %}
+{% endblock %}

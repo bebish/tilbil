@@ -4,14 +4,6 @@ from django.core.exceptions import ValidationError
 
 from language.models import Language,Level
 
-
-# def validate_lessons_count(value):
-#     max_lessons = 12
-#     if value.lessons.count() >= max_lessons:
-#         raise ValidationError(f'Максимальное количество уроков для уровня {value.name} уже достигнуто.')
-
-
-
 class Question(models.Model):
     question_text = models.TextField()
     correct_answer = models.TextField()
@@ -39,9 +31,21 @@ class TranslateQuestion(models.Model):
         return self.question_text
     
 
+class ListenQuestion(models.Model):
+    question_text = models.TextField()
+    correct_answer = models.TextField()  # правильные слова через пробел
+    blank_words = models.TextField()  # слова для выбора через запятую
+
+    def __str__(self) -> str:
+        res = f'listen+ {self.question_text}'
+        return res
+
 class LessonCategory(models.Model):
     title = models.TextField()
     lesson_level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='categories',blank=True)
+
+    def __str__(self) -> str:
+        return self.title
 
 
 
@@ -53,6 +57,7 @@ class Lesson(models.Model):
     tests = models.ManyToManyField(Question, related_name='lessons', blank=True)
     fill_in_the_blank_tests = models.ManyToManyField(FillInTheBlankQuestion, related_name='lessons', blank = True)
     translate_tests = models.ManyToManyField(TranslateQuestion,related_name='lessons',blank=True)
+    listen_tests = models.ManyToManyField(ListenQuestion,related_name='lessons',blank=True)
     image = models.ImageField(upload_to='lessons',default='default_lesson.avif')
 
     def __str__(self) -> str:
@@ -79,4 +84,4 @@ class Lesson(models.Model):
 
 
 class LessonAdmin(admin.ModelAdmin):
-    filter_horizontal = ('tests','fill_in_the_blank_tests','translate_tests',) 
+    filter_horizontal = ('tests','fill_in_the_blank_tests','translate_tests','listen_tests',) 
