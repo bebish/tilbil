@@ -3,6 +3,18 @@ $(document).ready(function() {
 
     // Функция для воспроизведения текста на английском
     function speakText(text) {
+
+    // Найти элемент с классом level-button
+    const languageButton = document.querySelector('.language-button');
+    // Извлечь значение data-level-id
+    const languageId = languageButton.getAttribute('data-language-id');
+
+    // Проверка languageId
+    if (languageId !== '1') {
+        return;
+    }
+
+
     if ('speechSynthesis' in window) {
         text = text.toLowerCase();
         // Проверяем, является ли текст английским или числом (с учетом символа __)
@@ -32,6 +44,57 @@ $(document).ready(function() {
         console.log('Ваш браузер не поддерживает Web Speech API');
     }
 }
+
+
+    // function speakText(text, voiceName = 'Google US English') {
+    //     if ('speechSynthesis' in window) {
+    //         text = text.toLowerCase();
+    //         // Проверяем, является ли текст английским или числом (с учетом символа __)
+    //         var englishPattern = /^[a-zA-Z0-9\s.,!?'_]+$/;
+    //         if (englishPattern.test(text)) {
+    //             var parts = text.split('__');
+    //             var index = 0;
+
+    //             function speakNextPart() {
+    //                 if (index < parts.length) {
+    //                     var msg = new SpeechSynthesisUtterance();
+    //                     msg.text = parts[index].trim();
+    //                     msg.lang = 'en-US'; // Установите язык на английский
+
+    //                     // Получаем список голосов и выбираем тот, который совпадает с voiceName
+    //                     const voices = window.speechSynthesis.getVoices();
+    //                     const selectedVoice = voices[0];    //  выбираем первый голос
+    //                     if (selectedVoice) {
+    //                         msg.voice = selectedVoice;
+    //                     }
+    //                     else {
+    //                         msg.voice = voices[0];
+    //                     }
+
+    //                     msg.onend = function(event) {
+    //                         index++;
+    //                         if (index < parts.length) {
+    //                             setTimeout(speakNextPart, 400); // Пауза в 400 мс между частями
+    //                         }
+    //                     };
+
+    //                     window.speechSynthesis.speak(msg);
+    //                 }
+    //             }
+
+    //             // Вызов speakNextPart после загрузки голосов
+    //             window.speechSynthesis.onvoiceschanged = function() {
+    //                 speakNextPart();
+    //             };
+
+    //         } 
+    //     } else {
+    //         console.log('Ваш браузер не поддерживает Web Speech API');
+    //     }
+    // }
+
+
+
 
 
 
@@ -128,6 +191,58 @@ $(document).ready(function() {
     });
 
 
+    // Обработчик клика на иконку воспроизведения текста вопроса
+    $('.lesson-container .fa-volume-high').click(function() {
+        var $this = $(this);
+        var $currentTest = $this.closest('.test-container');
+        var questionText = $currentTest.find('.listen_text').attr('listen-text');
+        
+        speakText(questionText);
+    });
+
+    // Обработчик клика на слова для выбора ответа
+    $('.listen-test .word').click(function() {
+        var $this = $(this);
+        var $currentTest = $this.closest('.test-container');
+        var $chosenWords = $currentTest.find('.chosen-words');
+        var correctAnswer = $currentTest.find('.listen-test').data('correct-answer').split(' ');
+        if (!$this.hasClass('chosen')) {
+            $this.addClass('chosen');
+            speakText($this.text())
+            $chosenWords.append($('<span>').text($this.text()));
+        }
+
+        var chosenAnswer = $currentTest.find('.chosen-words span').map(function() {
+            return $(this).text();
+        }).get();
+
+        if (chosenAnswer.length === correctAnswer.length) {
+            if (chosenAnswer.join(' ') === correctAnswer.join(' ')) {
+                $currentTest.find('.listen-test button').addClass('correct-answer').removeClass('incorrect-answer');
+                setTimeout(function() {
+                    $currentTest.addClass('completed correct');
+                    $currentTest.removeClass('active');
+                    showNextTest();
+                }, 1000);
+            } else {
+                $currentTest.find('.listen-test button').addClass('incorrect-answer').removeClass('correct-answer');
+                setTimeout(function() {
+                    $currentTest.addClass('completed incorrect');
+                    incorrectQuestions.push($currentTest); // Добавляем неправильный вопрос в массив
+                    $currentTest.removeClass('active');
+                    showNextTest();
+                }, 1000);
+            }
+        }
+     
+    });
+
+
+
+
+
+
+
 
     function showNextTest() {
         var $nextTest = $('.test-container').not('.completed').first();
@@ -146,6 +261,8 @@ $(document).ready(function() {
                 $question.find('.buttons-row button').removeClass('correct-answer incorrect-answer'); // Сбрасываем кнопки для тестов
                 $question.find('.form-control').removeClass('correct-answer incorrect-answer'); // Сбрасываем цвет кнопок
                 $question.find('.form-control').val(''); //очишаем форму
+                $question.find('.listen-test button').removeClass('correct-answer incorrect-answer'); // Сбрасываем цвет кнопок
+
             });
             incorrectQuestions[0].addClass('active');
             var questionText = incorrectQuestions[0].find('.badge.text-bg-info').text();
@@ -153,12 +270,22 @@ $(document).ready(function() {
             incorrectQuestions = []; // Очищаем массив неправильных вопросов
         } else {
             alert("Сиз тестти бутурдунуз!")
+          
+            // Найти элемент с классом level-button
+            const levelButton = document.querySelector('.level-button');
             
-            // var levelId = this.getAttribute('data-level-id');
-            // window.location.href = '/level/' + levelId + '/';
-            window.location.href = '/lesson'; // Перенаправление на главную страницу
+            // Извлечь значение data-level-id
+            const levelId = levelButton.getAttribute('data-level-id');
+            
+            // window.location.assign('/level/' + levelId + '/');
+
+            window.location.href = '/level/' + levelId + '/';
+            // window.location.href = '/lesson'; // Перенаправление на главную страницу
         }
     }
     var firstQuestionText = $('.test-container.active').find('.badge.text-bg-info').text();
     speakText(firstQuestionText);
+    
+
+
 });
