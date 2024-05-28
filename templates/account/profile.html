@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main -->
+    <section style="background-color: #282b34;" id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-12-medium">
+
+                    <!-- Sidebar -->
+                        <section class="box" style="border-radius: 20px;">
+                            <section id="intro" class="container">
+<!--                                    <section class="last">-->
+                                        <i class="icon solid featured alt fa-star"></i>
+                                        <header>
+                                            <h2>{{ request.user.rating }}</h2>
+                                        </header>
+<!--                                    </section>-->
+                            </section>
+                        </section>
+                        <section class="box" style="border-radius: 20px;">
+                            <section id="intro" class="container">
+<!--                                <section class="last">-->
+                                    <i class="icon solid featured alt fa-bolt"></i>
+                                    <header>
+                                        <h2>99</h2>
+                                    </header>
+<!--                                </section>-->
+                            </section>
+                        </section>
+
+                </div>
+                    <style>
+                        .content {
+                            display: flex; /* Использование Flexbox для контейнера */
+                            align-items: center; /* Вертикальное выравнивание элементов по центру */
+                            padding: 100px; /* Внутренние отступы для всего контейнера */
+                        }
+
+                        .image-container {
+                            flex: 0 0 auto; /* Изображение не будет растягиваться */
+                            text-align: center; /* Центровка изображения внутри контейнера */
+                            margin-right: 20px; /* Отступ справа от изображения */
+
+                        }
+
+                        .image-container img {
+                            width: 350px; /* Ширина изображения */
+                            height: 350px; /* Высота изображения */
+                            border-radius: 20px;
+                        }
+
+                        .text-container {
+                            flex: 1; /* Текстовая часть растягивается, заполняя оставшееся пространство */
+                            text-align: middle; /* Выравнивание текста по левому краю */
+
+                        }
+                        .box.post2 {
+                            border-radius: 20px; /* Добавьте скругление углов, если нужно */
+                        }
+                    </style>
+                <div class="col-8 col-12-medium imp-medium">
+
+                    <!-- Content -->
+                        <article class="box post2">
+                            <div class="image-container">
+                            {% if request.user.image %}
+                            <img src="{{ request.user.get_image }}"  alt="" /></img>
+                            {% else %}
+                            <img src="images/pic09.jpg" style="width: 300px; height: 400px;" alt="" /></img>
+                            {% endif %}
+
+                            </div>
+                            <br>
+                            <header>
+
+                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                  <div class="card-body">
+                                    <p class="card-title" style="color: #FFFFFF;">Аты: {{ request.user.first_name }}</p>
+                                  </div>
+                                </div>
+
+                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                  <div class="card-body">
+                                    <p class="card-title" style="color: #FFFFFF;">Фамилиясы: {{ request.user.last_name }}</p>
+                                  </div>
+                                </div>
+
+                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                  <div class="card-body">
+                                    <p class="card-title" style="color: #FFFFFF;">Колдонуучу: {{ request.user.username }}</p>
+                                  </div>
+                                </div>
+
+
+                            </header>
+                            <br>
+                            <a href="{% url 'profile_edit' %}"><i class="fas fa-edit fa-lg" style="color: #282b34;"></i></a>
+                        </article>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
