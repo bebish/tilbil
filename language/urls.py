@@ -9,5 +9,4 @@ urlpatterns = [
     path('language/', LanguageView.as_view(),name='language-list'),
     path('language/<int:pk>/', LanguageDetailView.as_view(),name='language-detail'),
     path('category/<int:pk>/', CategoryDetailView.as_view(),name='category-detail'),
-
 ]

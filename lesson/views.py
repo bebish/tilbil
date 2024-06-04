@@ -8,6 +8,7 @@ from .models import *
 from .forms import TranslateQuestionForm
 
 
+
 # Create your views here.
 class LessonDetailView(DetailView):
     model = Lesson
@@ -35,13 +36,13 @@ class LessonDetailView(DetailView):
                 'blank_words': test.blank_words.split(',')
             } for test in listen_tests
         ]
-        # speak_tests = lesson.speak_tests.all()
+
         context['tests'] = tests
         context['fill_in_the_blank_tests'] = fill_in_the_blank_tests_data
         context['translate_tests']=translate_tests
         context['translate_form'] = TranslateQuestionForm()
         context['listen_tests'] = listen_tests_data
-        # context['speak_tests'] = speak_tests
+
 
         # Если есть ответ пользователя в запросе, добавляем его в контекст
         if 'user_answer' in self.request.POST:

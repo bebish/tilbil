@@ -47,6 +47,7 @@ class ListenQuestion(models.Model):
 #         res = f'speak+ {self.question_text}'
 #         return res
 
+
 class LessonCategory(models.Model):
     title = models.TextField()
     description = models.TextField(blank=True)

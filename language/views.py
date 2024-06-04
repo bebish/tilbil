@@ -16,6 +16,7 @@ class LanguageView(ListView):
 
 class LanguageDetailView(DetailView):
     model = Language
+
     template_name = 'level-list.html'
     context_object_name = 'levels'
 
@@ -24,6 +25,7 @@ class LanguageDetailView(DetailView):
         language = kwargs['object'].id
         context['levels'] = Level.objects.filter(language_id = language)
         return context
+
 
 
 class LevelDetailView(DetailView):
