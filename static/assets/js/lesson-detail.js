@@ -98,6 +98,7 @@ $(document).ready(function() {
 
 
 
+
    // Для вопросов типа тест
    $('.lesson-test .buttons-row button').click(function() {
     var $this = $(this);

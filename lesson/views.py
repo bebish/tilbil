@@ -8,25 +8,8 @@ from .models import *
 from .forms import TranslateQuestionForm
 
 
+
 # Create your views here.
-
-# class CategoryView(ListView):
-#     model = LessonCategory
-#     template_name = 'index.html'
-#     context_object_name = 'categories'
-
-#     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-#         context = super().get_context_data(**kwargs)
-#         category = self.get_object()
-#         lessons = category.lessons.all()
-#         context['lessons'] = lessons
-#         return context
-
-class LessonView(ListView):
-    model = Lesson
-    template_name = 'index.html'
-    context_object_name = 'lessons'
-
 class LessonDetailView(DetailView):
     model = Lesson
     template_name = 'lesson-detail.html'
@@ -53,11 +36,13 @@ class LessonDetailView(DetailView):
                 'blank_words': test.blank_words.split(',')
             } for test in listen_tests
         ]
+
         context['tests'] = tests
         context['fill_in_the_blank_tests'] = fill_in_the_blank_tests_data
         context['translate_tests']=translate_tests
         context['translate_form'] = TranslateQuestionForm()
         context['listen_tests'] = listen_tests_data
+
 
         # Если есть ответ пользователя в запросе, добавляем его в контекст
         if 'user_answer' in self.request.POST:
@@ -78,3 +63,8 @@ class LessonDetailView(DetailView):
 
         # После обработки ответа можно выполнить редирект на ту же страницу
         return HttpResponseRedirect(reverse('lesson-detail', args=(lesson.pk,)))
+    
+class CategoryDetailView(DeleteView):
+    model = LessonCategory
+    template_name = 'category-detail.html'
+    context_object_name = 'category'
