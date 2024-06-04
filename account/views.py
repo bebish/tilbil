@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -38,6 +38,14 @@ def logout_view(request):
     logout(request)
     return redirect('/lesson')
 
+class UserRatingView(ListView):
+    model = User
+    template_name = 'rating.html'
+    context_object_name = 'users'
+
+    def get_queryset(self):
+        # Исключаем суперпользователей и сортируем остальных по рейтингу
+        return User.objects.filter(is_superuser=False).order_by('-rating')
 
 @login_required
 def profile_edit(request):

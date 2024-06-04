@@ -41,13 +41,11 @@
                         <li><a href="#">Veroeros feugiat</a></li>
                     </ul>
                 </li>
-                <li><a href="left-sidebar.html">Рейтинг</a></li>
+                <li><a href="{% url 'user_ratings' %}">Рейтинг</a></li>
                 <li><a href="{% url 'profile' %}">Профиль</a></li>
                 {% if not request.user.is_authenticated %}
                 <li><a href="{% url 'login' %}">Кируу</a></li>
                 <li><a href="{% url 'register' %}">Регистрация</a></li>
-                {% else %}
-                <li><a href="{% url 'logout' %}">Чыгуу</a></li>
                 {% endif %}
             </ul>
         </nav>
