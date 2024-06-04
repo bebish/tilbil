@@ -2,40 +2,43 @@
 {% extends 'base.html' %}	
 {% load static %}			
 {% block content %}	
-<!-- Main -->
 <section id="main">
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
 
-				<!-- Portfolio -->
-					<section>
-						<header class="major">
-							<h2>Lessons</h2>
-						</header>
+                {% for category, lessons in categories_with_lessons.items %}
+                <section>
+                    <header class="major">
+                        <a href="{% url 'category-detail' pk=category.id %}" style="text-decoration: none;">
+                            <h2>{{ category }}</h2>
+                        </a>
+                    </header>
+                    
+                    <div class="row">
+                        {% for lesson in lessons %}
+                            {% if lesson.category == category %}
+                            <div class="col-4 col-6-medium col-12-small">
+                                <section class="box">
+                                    <a href="#" class="image featured"><img src="{{ lesson.get_image }}" style="width: 340px; height: 200px;" alt="" /></a>
+                                    <header>
+                                        <h3>{{ lesson.name }}</h3>
+                                    </header>
+                                    <footer>
+                                        <ul class="actions">
+                                            <li><a href="{% url 'lesson-detail-view' lesson.id %}" class="button alt">Start</a></li>
+                                        </ul>
+                                    </footer>
+                                </section>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endfor %}
 
-						
-						<div class="row">
-							{% for lesson in lessons %}
-							<div class="col-4 col-6-medium col-12-small">
-								<section class="box">
-									<a href="#" class="image featured"><img src="{{ lesson.get_image }}" style="width: 340px; height: 200px;" alt="" /></a>
-									<header>
-										<h3>{{ lesson.name }}</h3>
-									</header>
-									<!-- <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p> -->
-									<footer>
-										<ul class="actions">
-											<li><a href="{% url 'lesson-detail-view' lesson.id %}" class="button alt">Start</a></li>
-										</ul>
-									</footer>
-								</section>
-							</div>
-							{% endfor %}
-						</div>
-						
 
-					</section>
+
 			</div>
 		</div>
 	</div>

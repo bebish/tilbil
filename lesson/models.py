@@ -40,8 +40,16 @@ class ListenQuestion(models.Model):
         res = f'listen+ {self.question_text}'
         return res
 
+# class SpeakQuestion(models.Model):
+#     question_text = models.TextField()
+
+#     def __str__(self) -> str:
+#         res = f'speak+ {self.question_text}'
+#         return res
+
 class LessonCategory(models.Model):
     title = models.TextField()
+    description = models.TextField(blank=True)
     lesson_level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='categories',blank=True)
 
     def __str__(self) -> str:

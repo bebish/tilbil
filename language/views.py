@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
 from .models import Level, Language
-from lesson.models import Lesson
+from lesson.models import Lesson, LessonCategory
 
 def home(request):
     return render(request, 'home.html')
@@ -26,19 +26,17 @@ class LanguageDetailView(DetailView):
         return context
 
 
-class LevelView(ListView):
-    model = Level
-    template_name = 'level-list.html'
-    context_object_name = "levels"
-
-
 class LevelDetailView(DetailView):
     model = Level
     template_name = 'index.html'
-    context_object_name = 'lessons'
+    context_object_name = 'level'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        level = kwargs['object'].id
-        context['lessons'] = Lesson.objects.filter(level_id = level)
+        level = self.get_object()  # Получаем объект уровня
+        categories = LessonCategory.objects.filter(lesson_level=level)  # Получаем все категории для данного уровня
+        lessons_by_category = {}  # Создаем словарь для хранения уроков по категориям
+        for category in categories:
+            lessons_by_category[category] = category.lessons.all()  # Получаем все уроки для каждой категории
+        context['categories_with_lessons'] = lessons_by_category  # Передаем словарь с категориями и уроками в контекст
         return context

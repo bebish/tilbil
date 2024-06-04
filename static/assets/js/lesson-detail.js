@@ -46,56 +46,6 @@ $(document).ready(function() {
 }
 
 
-    // function speakText(text, voiceName = 'Google US English') {
-    //     if ('speechSynthesis' in window) {
-    //         text = text.toLowerCase();
-    //         // Проверяем, является ли текст английским или числом (с учетом символа __)
-    //         var englishPattern = /^[a-zA-Z0-9\s.,!?'_]+$/;
-    //         if (englishPattern.test(text)) {
-    //             var parts = text.split('__');
-    //             var index = 0;
-
-    //             function speakNextPart() {
-    //                 if (index < parts.length) {
-    //                     var msg = new SpeechSynthesisUtterance();
-    //                     msg.text = parts[index].trim();
-    //                     msg.lang = 'en-US'; // Установите язык на английский
-
-    //                     // Получаем список голосов и выбираем тот, который совпадает с voiceName
-    //                     const voices = window.speechSynthesis.getVoices();
-    //                     const selectedVoice = voices[0];    //  выбираем первый голос
-    //                     if (selectedVoice) {
-    //                         msg.voice = selectedVoice;
-    //                     }
-    //                     else {
-    //                         msg.voice = voices[0];
-    //                     }
-
-    //                     msg.onend = function(event) {
-    //                         index++;
-    //                         if (index < parts.length) {
-    //                             setTimeout(speakNextPart, 400); // Пауза в 400 мс между частями
-    //                         }
-    //                     };
-
-    //                     window.speechSynthesis.speak(msg);
-    //                 }
-    //             }
-
-    //             // Вызов speakNextPart после загрузки голосов
-    //             window.speechSynthesis.onvoiceschanged = function() {
-    //                 speakNextPart();
-    //             };
-
-    //         } 
-    //     } else {
-    //         console.log('Ваш браузер не поддерживает Web Speech API');
-    //     }
-    // }
-
-
-
-
 
 
    // Для вопросов типа тест
