@@ -23,7 +23,7 @@
                             <section id="intro" class="container">
                                 <i class="icon solid featured2 alt3 fa-bolt"></i>
                                 <header>
-                                    <h2>99</h2>
+                                    <h2>{{ request.user.rating }}</h2>
                                 </header>
                             </section>
                         </section>
@@ -58,6 +58,27 @@
                             border-radius: 20px; /* Добавьте скругление углов, если нужно */
                             position: relative;
                             padding-bottom: 30px;
+                        }
+                        .card {
+                            width: 100%;
+                            margin-bottom: 15px;
+                            background-color: #282b34;
+                            border: 0px;
+                            border-radius: 20px;
+                        }
+
+                        .card-body {
+                            color: #FFFFFF;
+                            font-family: Arial;
+                        }
+
+                        .card-title {
+                            color: #FFFFFF;
+                            font-family: Arial;
+                            letter-spacing: 0.11em;
+                            margin-top: 2px;
+                            margin-bottom: 2px;
+                        }
 
                     </style>
                 <div class="col-8 col-12-medium imp-medium">
@@ -75,21 +96,21 @@
                             <br>
                             <header>
 
-                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                <div class="card">
                                   <div class="card-body">
-                                    <p class="card-title" style="color: #FFFFFF; font-family: Arial; letter-spacing: 0.03em; margin-top: 2px; margin-bottom: 2px;">Аты: <span class="card-title" style="color: #FFFFFF; font-family: Impact, fantasy; letter-spacing: 0.11em;">{{ request.user.first_name }}</span></p>
+                                    <p class="card-title">Аты: {{ request.user.first_name }}</p>
                                   </div>
                                 </div>
 
-                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                <div class="card w-90 mb-3">
                                   <div class="card-body">
-                                    <p class="card-title" style="color: #FFFFFF;">Фамилиясы: {{ request.user.last_name }}</p>
+                                    <p class="card-title">Фамилиясы: {{ request.user.last_name }}</p>
                                   </div>
                                 </div>
 
-                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                <div class="card w-90 mb-3">
                                   <div class="card-body">
-                                    <p class="card-title" style="color: #FFFFFF;">Колдонуучу: {{ request.user.username }}</p>
+                                    <p class="card-title">Колдонуучу: {{ request.user.username }}</p>
                                   </div>
                                 </div>
 

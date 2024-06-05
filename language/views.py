@@ -33,12 +33,24 @@ class LevelDetailView(DetailView):
     template_name = 'index.html'
     context_object_name = 'level'
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        level = self.get_object()  # Получаем объект уровня
-        categories = LessonCategory.objects.filter(lesson_level=level)  # Получаем все категории для данного уровня
-        lessons_by_category = {}  # Создаем словарь для хранения уроков по категориям
+        level = self.get_object()
+        categories = LessonCategory.objects.filter(lesson_level=level)
+        lessons_by_category = {}
+
+        # Получаем список завершенных уроков для текущего пользователя
+        completed_lessons = set(self.request.user.completed_lessons)
+
         for category in categories:
-            lessons_by_category[category] = category.lessons.all()  # Получаем все уроки для каждой категории
-        context['categories_with_lessons'] = lessons_by_category  # Передаем словарь с категориями и уроками в контекст
+            # Получаем все уроки для каждой категории
+            lessons = category.lessons.all()
+
+            # Добавляем атрибут `is_completed` к каждому уроку
+            for lesson in lessons:
+                lesson.is_completed = lesson.id in completed_lessons
+
+            lessons_by_category[category] = lessons
+
+        context['categories_with_lessons'] = lessons_by_category
         return context

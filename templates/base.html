@@ -22,30 +22,12 @@
             <ul>
                 <li class="current"><a href="/">Башкы бет</a></li>
                 <li><a href="/language/">Курстар</a></li>
-                <li>
-                    <a href="#">Настройка</a>
-                    <ul>
-                        <li><a href="#">Lorem ipsum dolor</a></li>
-                        <li><a href="#">Magna phasellus</a></li>
-                        <li><a href="#">Etiam dolore nisl</a></li>
-                        <li>
-                            <a href="#">Phasellus consequat</a>
-                            <ul>
-                                <li><a href="#">Magna phasellus</a></li>
-                                <li><a href="#">Etiam dolore nisl</a></li>
-                                <li><a href="#">Veroeros feugiat</a></li>
-                                <li><a href="#">Nisl sed aliquam</a></li>
-                                <li><a href="#">Dolore adipiscing</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Veroeros feugiat</a></li>
-                    </ul>
-                </li>
                 <li><a href="{% url 'user_ratings' %}">Рейтинг</a></li>
-                <li><a href="{% url 'profile' %}">Профиль</a></li>
                 {% if not request.user.is_authenticated %}
                 <li><a href="{% url 'login' %}">Кируу</a></li>
-                <li><a href="{% url 'register' %}">Регистрация</a></li>
+                <li><a href="{% url 'register' %}">Катталуу</a></li>
+                {% else %}
+                <li><a href="{% url 'profile' %}">Профиль</a></li>
                 {% endif %}
             </ul>
         </nav>

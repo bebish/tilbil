@@ -16,7 +16,7 @@ class RegistrationView(SuccessMessageMixin,CreateView):
     model = User
     template_name = 'account/registration.html'
     form_class = RegistrationForm
-    success_url = reverse_lazy('lesson-view')
+    success_url = reverse_lazy('home')
     success_message = 'Successfully registered'
 
     def form_valid(self, form):
@@ -36,7 +36,7 @@ def profile(request):
     return render(request, 'account/profile.html')
 def logout_view(request):
     logout(request)
-    return redirect('/lesson')
+    return redirect('/')
 
 class UserRatingView(ListView):
     model = User
@@ -57,3 +57,4 @@ def profile_edit(request):
     else:
         form = ProfileEditForm(instance=request.user)
     return render(request, 'account/profile-edit.html', {'form': form})
+
