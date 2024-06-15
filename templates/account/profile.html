@@ -11,22 +11,31 @@
                     <!-- Sidebar -->
                         <section class="box" style="border-radius: 20px;">
                             <section id="intro" class="container">
-<!--                                    <section class="last">-->
-                                        <i class="icon solid featured2 alt4 fa-star"></i>
-                                        <header>
-                                            <h2>{{ request.user.rating }}</h2>
-                                        </header>
-<!--                                    </section>-->
+                                <i class="icon solid featured2 alt4 fa-award"></i>
+                                <header>
+                                    <h2>{{ request.user.rating }}</h2>
+                                </header>
                             </section>
                         </section>
+                        {% if request.user.strike_status %}
                         <section class="box" style="border-radius: 20px;">
                             <section id="intro" class="container">
                                 <i class="icon solid featured2 alt3 fa-bolt"></i>
                                 <header>
-                                    <h2>99</h2>
+                                    <h2>{{ request.user.strike }}</h2>
                                 </header>
                             </section>
                         </section>
+                        {% else %}
+                        <section class="box" style="border-radius: 20px;">
+                            <section id="intro" class="container">
+                                <i class="icon solid featured alt3 fa-bolt"></i>
+                                <header>
+                                    <h2>{{ request.user.strike }}</h2>
+                                </header>
+                            </section>
+                        </section>
+                        {% endif %}
 
                 </div>
                     <style>
@@ -58,6 +67,27 @@
                             border-radius: 20px; /* Добавьте скругление углов, если нужно */
                             position: relative;
                             padding-bottom: 30px;
+                        }
+                        .card {
+                            width: 100%;
+                            margin-bottom: 15px;
+                            background-color: #282b34;
+                            border: 0px;
+                            border-radius: 20px;
+                        }
+
+                        .card-body {
+                            color: #FFFFFF;
+                            font-family: Arial;
+                        }
+
+                        .card-title {
+                            color: #FFFFFF;
+                            font-family: Arial;
+                            letter-spacing: 0.11em;
+                            margin-top: 2px;
+                            margin-bottom: 2px;
+                        }
 
                     </style>
                 <div class="col-8 col-12-medium imp-medium">
@@ -75,33 +105,39 @@
                             <br>
                             <header>
 
-                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                <div class="card">
                                   <div class="card-body">
-                                    <p class="card-title" style="color: #FFFFFF; font-family: Arial; letter-spacing: 0.03em; margin-top: 2px; margin-bottom: 2px;">Аты: <span class="card-title" style="color: #FFFFFF; font-family: Impact, fantasy; letter-spacing: 0.11em;">{{ request.user.first_name }}</span></p>
+                                    <p class="card-title">Аты: {{ request.user.first_name }}</p>
                                   </div>
                                 </div>
 
-                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                <div class="card w-90 mb-3">
                                   <div class="card-body">
-                                    <p class="card-title" style="color: #FFFFFF;">Фамилиясы: {{ request.user.last_name }}</p>
+                                    <p class="card-title">Фамилиясы: {{ request.user.last_name }}</p>
                                   </div>
                                 </div>
 
-                                <div class="card w-90 mb-3" style="background-color: #282b34; border: 0px; border-radius: 20px;">
+                                <div class="card w-90 mb-3">
                                   <div class="card-body">
-                                    <p class="card-title" style="color: #FFFFFF;">Колдонуучу: {{ request.user.username }}</p>
+                                    <p class="card-title">Колдонуучу: {{ request.user.username }}</p>
                                   </div>
                                 </div>
 
 
                             </header>
                             <br>
-
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{% url 'profile_edit' %}" class="btn btn-secondary">
-                                    <i class="fas fa-edit fa-lg" style="color: #282b34;"></i> Өзгөртүү
+                                <div class="d-flex">
+                                    <a href="{% url 'profile_edit' %}" class="btn btn-secondary mr-2">
+                                        <i class="fas fa-edit fa-lg" style="color: #282b34;"></i> Өзгөртүү
+                                    </a>
+                                    <a href="{% url 'delete_account' %}" class="btn btn-secondary" style="margin-left: 10px;">
+                                        <i class="fas fa-trash fa-lg" style="color: #282b34;"></i> Өчүрүү
+                                    </a>
+                                </div>
+                                <a href="{% url 'logout' %}" class="btn btn-danger">
+                                    <i class="fa fa-sign-out"style="color: #282b34;"></i>Чыгуу
                                 </a>
-                                <a href="{% url 'logout' %}" class="btn btn-danger">Чыгуу</a>
                             </div>
                         </article>
 
