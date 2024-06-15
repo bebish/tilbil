@@ -37,36 +37,32 @@
 </head>
 
 <body>
-            <div class="lesson-container">
-                
-                <div class="lesson-test-container">
-                    <div class="lesson-test">
-                        {% for test in tests %}
-                        <div id="test{{ test.id }}" class="test-container {% if forloop.first %}active{% endif %}">
-                            <h1 class="question-header">Туура жоопту танда</h1>
-                            <div class="test-lesson">
-                                <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
-                                
-                                <h2><span class="badge text-bg-info">{{ test }}</span></h2>
-                            </div>
+    <div class="lesson-container">
+        <div class="lesson-test-container">
+            <div class="lesson-test">
+                {% for test in tests %}
+                <div id="test{{ test.id }}" class="test-container {% if forloop.first %}active{% endif %}">
+                    <h1 class="question-header">Туура жоопту танда</h1>
+                    <div class="test-lesson">
+                        <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
+                        
+                        <h2><span class="badge text-bg-info">{{ test }}</span></h2>
+                    </div>
 
-                            <div class="buttons-row mt-2" style="display: flex; flex-direction: column; justify-content: center; gap: 10px;">
-                                <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ test.correct_answer }}">{{ test.var1 }}</button>
-                                <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ test.correct_answer }}">{{ test.var2 }}</button>
-                                <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ test.correct_answer }}">{{ test.var3 }}</button>
-                            </div>
-                        </div>
-                        {% endfor %}
+                    <div class="buttons-row mt-2" style="display: flex; flex-direction: column; justify-content: center; gap: 10px;">
+                        <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ test.correct_answer }}">{{ test.var1 }}</button>
+                        <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ test.correct_answer }}">{{ test.var2 }}</button>
+                        <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ test.correct_answer }}">{{ test.var3 }}</button>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-    
+        </div>
+    </div>
 
-
-            <div class="lesson-container">
-                <div class="lesson-test-container">
-                    <div class="lesson-test">
-
+    <div class="lesson-container">
+        <div class="lesson-test-container">
+            <div class="lesson-test">
                 {% for test in fill_in_the_blank_tests %}
                 <div id="fillTest{{ forloop.counter }}" class="test-container {% if not tests and forloop.first %}active{% endif %}">
                     <h1 class="question-header">Боштуктарды толтур</h1>
@@ -84,87 +80,73 @@
                     <div class="chosen-words mt-2">
                         <!-- выбранные пользователем слова будут отображаться здесь -->
                     </div>
-                    
                 </div>
                 {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="lesson-container">
+        <div class="lesson-test-container">
+            <div class="lesson-test">
+                {% for translate_test in translate_tests %}
+                <div id="test{{ translate_test.id }}" class="test-container {% if not fill_in_the_blank_tests and not tests and forloop.first %}active{% endif %}">
+                    <h1 class="question-header">Суйломду котор</h1>
+                    <div class="test-lesson">
+                        <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
+                        <h2><span class="badge text-bg-info">{{ translate_test }}</span></h2>
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Translate</label>
+                        <input type="hidden" class="correct-answer" value="{{ translate_test.correct_answer }}">
+                    </div>
+                    <br>
+                    <div class="translation-question">
+                        <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ translate_test.correct_answer }}">текшеруу</button>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+        </div>
+    </div>
 
+    <div class="lesson-container">
+        <div class="lesson-test-container">
+            <div class="lesson-test">
+                {% for listen_test in listen_tests %}
+                <div id="test{{ listen_test.id }}" class="test-container {% if not fill_in_the_blank_tests and not tests and not translate_tests and forloop.first %}active{% endif %}">
+                    <h1 class="question-header">Суйломду угуп туура туз</h1>
+                    <div class="test-lesson">
+                        <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
+                        <button type="button" style="width: 40px; height: 40px; border: 2px solid #1e90ff; text-align: center; line-height: 36px; background-color: #23aae4; border-radius: 8px;">
+                            <i class="fa-solid fa-volume-high" style="color:#060606 ;font-size: 24px;"></i>
+                        </button>
+                    </div>
+                    <div class="listen_text" listen-text="{{ listen_test.question_text }}">
+                    </div>
+                    <br>
 
-
-
-            <div class="lesson-container">
-                <div class="lesson-test-container">
-                    <div class="lesson-test">
-                        {% for translate_test in translate_tests %}
-                        <div id="test{{ translate_test.id }}" class="test-container {% if not fill_in_the_blank_tests and not tests and forloop.first %}active{% endif %}">
-                            <h1 class="question-header">Суйломду котор</h1>
-                            <div class="test-lesson">
-                                <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
-                                <h2><span class="badge text-bg-info">{{ translate_test }}</span></h2>
-                            </div>
-
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" style="height: 100px"></textarea>
-                                <label for="floatingTextarea2">Translate</label>
-                                <input type="hidden" class="correct-answer" value="{{ translate_test.correct_answer }}">
-                            </div>
-                            <br>
-                            <div class="translation-question">
-                            <button type="button" class="btn btn-outline-secondary" data-correct-answer="{{ translate_test.correct_answer }}">текшеруу</button>
-                            </div>
-                        </div>
+                    <div class="listen-test" data-correct-answer="{{ listen_test.correct_answer }}">
+                        {% for word in listen_test.blank_words %}
+                        <button type="button" class="btn btn-outline-secondary word">{{ word }}</button>
                         {% endfor %}
                     </div>
-                </div>
-            </div>
-
-
-            <div class="lesson-container">
-                <div class="lesson-test-container">
-                    <div class="lesson-test">
-                        {% for listen_test in listen_tests %}
-                        <div id="test{{ listen_test.id }}" class="test-container {% if not fill_in_the_blank_tests and not tests and not translate_tests and forloop.first %}active{% endif %}">
-                            <h1 class="question-header">Суйломду угуп туура туз</h1>
-                            <div class="test-lesson">
-                                <img src="{{ lesson.get_image }}" style="width: 300px; height: 200px;" class="rounded" alt="...">
-                                <button type="button" style="width: 40px; height: 40px; border: 2px solid #1e90ff; text-align: center; line-height: 36px; background-color: #23aae4; border-radius: 8px;">
-                                    <i class="fa-solid fa-volume-high" style="color:#060606 ;font-size: 24px;"></i>
-                                </button>
-                            </div>
-                            <div class="listen_text" listen-text="{{ listen_test.question_text }}">
-                            </div>
-                            <br>
-
-                            <div class="listen-test" data-correct-answer="{{ listen_test.correct_answer }}">
-                                {% for word in listen_test.blank_words %}
-                                <button type="button" class="btn btn-outline-secondary word">{{ word }}</button>
-                                {% endfor %}
-                            </div>
-                            <div class="chosen-words mt-2">
-                                <!-- выбранные пользователем слова будут отображаться здесь -->
-                            </div>
-                        {% endfor %}
+                    <div class="chosen-words mt-2">
+                        <!-- выбранные пользователем слова будут отображаться здесь -->
                     </div>
                 </div>
+                {% endfor %}
             </div>
+        </div>
+    </div>
 
-
-
-
-
-            <div class="level-button" data-level-id="{{ lesson.level_id }}">
-            </div>
-            <div class="language-button" data-language-id="{{ lesson.language_id }}">
-            </div>
+    <div class="level-button" data-level-id="{{ lesson.level_id }}"></div>
+    <div class="language-button" data-language-id="{{ lesson.language_id }}"></div>
+    <div class="gender-button" data-gender="{{ lesson.gender }}"></div>
             
-
-    
-
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'assets/js/lesson-detail.js' %}"></script>
-
 </body>
 </html>

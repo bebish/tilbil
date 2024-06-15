@@ -68,3 +68,5 @@ class CategoryDetailView(DeleteView):
     model = LessonCategory
     template_name = 'category-detail.html'
     context_object_name = 'category'
+
+

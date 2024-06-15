@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section id="main">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <section>
+                    <header class="text-center">
+                        <h2>Үндүүлөр</h2>
+                    </header>
+                    <div class="container-fluid" id="vowels">
+                        <!-- Кнопки гласных звуков -->
+                    </div>
+                </section>
+
+                <section>
+                    <header class="text-center">
+                        <h2>Үнсүздөр</h2>
+                    </header>
+                    <div class="container-fluid" id="consonants">
+                        <!-- Кнопки согласных звуков -->
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'assets/js/sounds.js' %}"></script>
+
+<style>
+    /* Специфичные стили для контента */
+    #main {
+        background-color: #f8f9fa;
+        color: #212529;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    #main section {
+        margin-bottom: 30px;
+    }
+
+    #main header h2 {
+        margin-bottom: 20px;
+        color: #212121;
+    }
+
+    #main .container-fluid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #main .sound-button {
+        background-color: #343a40;
+        border: none;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 20px;
+        width: 100px;
+        height: 100px;
+        color: #fff;
+        font-size: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #main .sound-button:hover {
+        background-color: #495057;
+    }
+
+    #main .sound-button span {
+        margin-top: auto;
+        font-size: 12px;
+    }
+</style>
+
+{% endblock %}

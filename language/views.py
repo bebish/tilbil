@@ -42,3 +42,8 @@ class LevelDetailView(DetailView):
             lessons_by_category[category] = category.lessons.all()  # Получаем все уроки для каждой категории
         context['categories_with_lessons'] = lessons_by_category  # Передаем словарь с категориями и уроками в контекст
         return context
+
+
+
+def sounds_page(request):
+    return render(request, 'sounds.html')
