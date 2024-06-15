@@ -24,10 +24,11 @@
                 <li {% if request.path == '/language/' %}class="current"{% endif %}><a href="/language/">Курстар</a></li>
                 <li {% if request.path == '/sounds/' %}class="current"{% endif %}><a href="/sounds/">Үндөр</a></li>
                 <li><a href="{% url 'user_ratings' %}">Рейтинг</a></li>
-                <li><a href="{% url 'profile' %}">Профиль</a></li>
                 {% if not request.user.is_authenticated %}
                 <li><a href="{% url 'login' %}">Кируу</a></li>
-                <li><a href="{% url 'register' %}">Регистрация</a></li>
+                <li><a href="{% url 'register' %}">Катталуу</a></li>
+                {% else %}
+                <li><a href="{% url 'profile' %}">Профиль</a></li>
                 {% endif %}
             </ul>
         </nav>

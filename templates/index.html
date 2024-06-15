@@ -18,19 +18,23 @@
                     <div class="row">
                         {% for lesson in lessons %}
                             {% if lesson.category == category %}
-                            <div class="col-4 col-6-medium col-12-small">
-                                <section class="box">
-                                    <a href="#" class="image featured"><img src="{{ lesson.get_image }}" style="width: 340px; height: 200px;" alt="" /></a>
-                                    <header>
-                                        <h3>{{ lesson.name }}</h3>
-                                    </header>
-                                    <footer>
-                                        <ul class="actions">
-                                            <li><a href="{% url 'lesson-detail-view' lesson.id %}" class="button alt">Баштадык</a></li>
-                                        </ul>
-                                    </footer>
-                                </section>
-                            </div>
+                                <div class="col-4 col-6-medium col-12-small">
+                                    <section class="box">
+                                        {% if not lesson.is_completed %}
+                                        <a href="{% url 'lesson-detail-view' lesson.id %}" class="image featured"><img src="{{ lesson.get_image }}" style="width: 340px; height: 200px;" alt="" /></a>
+                                        {% else %}
+                                        <a href="{% url 'lesson-detail-view' lesson.id %}" class="image featured"><img src="/media/defaults/def.png" style="width: 340px; height: 200px;" alt="" /></a>
+                                        {% endif %}
+                                        <header>
+                                            <h3>{{ lesson.name }}</h3>
+                                        </header>
+                                        <footer>
+                                            <ul class="actions">
+                                                <li><a href="{% url 'lesson-detail-view' lesson.id %}" class="button alt">Баштадык</a></li>
+                                            </ul>
+                                        </footer>
+                                    </section>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     </div>

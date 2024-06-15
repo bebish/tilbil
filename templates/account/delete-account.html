@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="main">
+					<div class="container">
+
+						<!-- Content -->
+							<article class="box post">
+                                <h2>Өчүрүүнү тастыктаныз?</h2>
+                                <form method="post">
+                                    {% csrf_token %}
+
+                                    <input class="btn btn-primary" type="submit" value="ООБА" style="margin-top: 20px;">
+                                    <a class="btn btn-secondary" href="{% url 'profile' %}" role="button" style="margin-top: 20px; margin-left:10px;">Жок</a>
+                                </form>
+							</article>
+
+					</div>
+				</section>
+
+{% endblock %}
