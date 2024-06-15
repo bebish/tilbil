@@ -18,6 +18,7 @@ class RegistrationView(SuccessMessageMixin,CreateView):
     template_name = 'account/registration.html'
     form_class = RegistrationForm
     success_url = reverse_lazy('home')
+
     success_message = 'Cиз ийгиликтүү катталдыныз!'
 
     def form_valid(self, form):

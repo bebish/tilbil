@@ -59,6 +59,13 @@ class LessonCategory(models.Model):
 
 
 class Lesson(models.Model):
+    MALE = 'M'
+    FEMALE = 'F'
+    GENDER_CHOICES = [
+        (MALE, 'Мужской'),
+        (FEMALE, 'Женский'),
+    ]
+
     language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='lessons')
     level = models.ForeignKey(Level,on_delete=models.CASCADE,related_name='lessons',default=1)
     category = models.ForeignKey(LessonCategory, on_delete=models.CASCADE, related_name='lessons',default=1)
@@ -68,6 +75,7 @@ class Lesson(models.Model):
     translate_tests = models.ManyToManyField(TranslateQuestion,related_name='lessons',blank=True)
     listen_tests = models.ManyToManyField(ListenQuestion,related_name='lessons',blank=True)
     image = models.ImageField(upload_to='lessons',default='default_lesson.avif')
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
 
     def __str__(self) -> str:
         return self.name

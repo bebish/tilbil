@@ -20,8 +20,9 @@
     <!-- Nav -->
         <nav id="nav">
             <ul>
-                <li class="current"><a href="/">Башкы бет</a></li>
-                <li><a href="/language/">Курстар</a></li>
+                <li {% if request.path == '/' %}class="current"{% endif %}><a href="/">Башкы бет</a></li>
+                <li {% if request.path == '/language/' %}class="current"{% endif %}><a href="/language/">Курстар</a></li>
+                <li {% if request.path == '/sounds/' %}class="current"{% endif %}><a href="/sounds/">Үндөр</a></li>
                 <li><a href="{% url 'user_ratings' %}">Рейтинг</a></li>
                 {% if not request.user.is_authenticated %}
                 <li><a href="{% url 'login' %}">Кируу</a></li>

@@ -54,3 +54,8 @@ class LevelDetailView(DetailView):
 
         context['categories_with_lessons'] = lessons_by_category
         return context
+
+
+
+def sounds_page(request):
+    return render(request, 'sounds.html')
