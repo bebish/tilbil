@@ -2050,6 +2050,14 @@ input, select, textarea {
 					border-top-color: #5bace2;
 				}
 
+			.icon.featured.alt3 {
+				background-color: #827a7c;
+			}
+
+				.icon.featured.alt3:after {
+					border-top-color: #827a7c;
+				}
+
         .icon.featured2 {
 			position: relative;
 			display: inline-block;
@@ -2101,11 +2109,11 @@ input, select, textarea {
 					border-top-color: #26B922;
 				}
 			.icon.featured2.alt4 {
-				background-color: #FF311C;
+				background-color: #f80d0d;
 			}
 
 				.icon.featured2.alt4:after {
-					border-top-color: #FF311C;
+					border-top-color: #f80d0d;
 				}
 /* Page Wrapper */
 

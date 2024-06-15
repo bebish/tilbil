@@ -23,7 +23,7 @@
                                         {% if not lesson.is_completed %}
                                         <a href="{% url 'lesson-detail-view' lesson.id %}" class="image featured"><img src="{{ lesson.get_image }}" style="width: 340px; height: 200px;" alt="" /></a>
                                         {% else %}
-                                        <a href="{% url 'lesson-detail-view' lesson.id %}" class="image featured"><img src="/media/defaults/default_lesson2.jpeg" style="width: 340px; height: 200px;" alt="" /></a>
+                                        <a href="{% url 'lesson-detail-view' lesson.id %}" class="image featured"><img src="/media/defaults/def.png" style="width: 340px; height: 200px;" alt="" /></a>
                                         {% endif %}
                                         <header>
                                             <h3>{{ lesson.name }}</h3>

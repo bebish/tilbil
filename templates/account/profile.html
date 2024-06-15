@@ -11,22 +11,31 @@
                     <!-- Sidebar -->
                         <section class="box" style="border-radius: 20px;">
                             <section id="intro" class="container">
-<!--                                    <section class="last">-->
-                                        <i class="icon solid featured2 alt4 fa-star"></i>
-                                        <header>
-                                            <h2>{{ request.user.rating }}</h2>
-                                        </header>
-<!--                                    </section>-->
-                            </section>
-                        </section>
-                        <section class="box" style="border-radius: 20px;">
-                            <section id="intro" class="container">
-                                <i class="icon solid featured2 alt3 fa-bolt"></i>
+                                <i class="icon solid featured2 alt4 fa-award"></i>
                                 <header>
                                     <h2>{{ request.user.rating }}</h2>
                                 </header>
                             </section>
                         </section>
+                        {% if request.user.strike_status %}
+                        <section class="box" style="border-radius: 20px;">
+                            <section id="intro" class="container">
+                                <i class="icon solid featured2 alt3 fa-bolt"></i>
+                                <header>
+                                    <h2>{{ request.user.strike }}</h2>
+                                </header>
+                            </section>
+                        </section>
+                        {% else %}
+                        <section class="box" style="border-radius: 20px;">
+                            <section id="intro" class="container">
+                                <i class="icon solid featured alt3 fa-bolt"></i>
+                                <header>
+                                    <h2>{{ request.user.strike }}</h2>
+                                </header>
+                            </section>
+                        </section>
+                        {% endif %}
 
                 </div>
                     <style>
@@ -117,12 +126,18 @@
 
                             </header>
                             <br>
-
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{% url 'profile_edit' %}" class="btn btn-secondary">
-                                    <i class="fas fa-edit fa-lg" style="color: #282b34;"></i> Өзгөртүү
+                                <div class="d-flex">
+                                    <a href="{% url 'profile_edit' %}" class="btn btn-secondary mr-2">
+                                        <i class="fas fa-edit fa-lg" style="color: #282b34;"></i> Өзгөртүү
+                                    </a>
+                                    <a href="{% url 'delete_account' %}" class="btn btn-secondary" style="margin-left: 10px;">
+                                        <i class="fas fa-trash fa-lg" style="color: #282b34;"></i> Өчүрүү
+                                    </a>
+                                </div>
+                                <a href="{% url 'logout' %}" class="btn btn-danger">
+                                    <i class="fa fa-sign-out"style="color: #282b34;"></i>Чыгуу
                                 </a>
-                                <a href="{% url 'logout' %}" class="btn btn-danger">Чыгуу</a>
                             </div>
                         </article>
 

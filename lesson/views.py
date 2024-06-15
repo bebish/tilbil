@@ -58,9 +58,15 @@ class LessonDetailView(DetailView):
         if lesson.id not in user.completed_lessons:
             user.completed_lessons.append(lesson.id)
             user.rating += 20
+            user.week_rating += 20
         else:
             user.rating += 5
+            user.week_rating += 5
 
+        if user.last_lesson_date != timezone.now().date():
+            user.strike += 1
+            user.last_lesson_date = timezone.now().date()
+        user.strike_status = True
         user.save()
 
         return super().get(request, *args, **kwargs)

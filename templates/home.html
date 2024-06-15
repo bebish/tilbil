@@ -3,6 +3,14 @@
 {% block home %}	
 
 <div>
+    {% if messages %}
+    <br>
+    {% endif %}
+    <ul class="messages" style="margin top 10px;">
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+    </ul>
     <!-- Banner -->
     <section id="banner">
         <header>
