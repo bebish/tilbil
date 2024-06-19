@@ -36,10 +36,14 @@
 
                     <!-- Sidebar -->
                         <section class="box" style="border-radius: 20px;">
-                            <li><a href="{% url 'user_ratings' %}" class="button alt">Жалпы рейтинг</a></li>
+                            <a href="{% url 'user_ratings' %}" class="button alt w-100 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-trophy mr-2" style="margin-right:10px;"></i>  Жалпы рейтинг
+                            </a>
                         </section>
                         <section class="box" style="border-radius: 20px;">
-                            <li><a href="{% url 'user_week_ratings' %}" class="button alt">Жумалык рейтинг</a></li>
+                            <a href="{% url 'user_week_ratings' %}" class="button alt w-100 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-trophy mr-2" style="margin-right:10px;"></i> Жумалык рейтинг
+                            </a>
                         </section>
 
                 </div>

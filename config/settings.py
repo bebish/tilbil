@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'language',
     'lesson',
     'account',
+    'forum',
 ]
 
 MIDDLEWARE = [

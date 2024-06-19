@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Main -->
+<section id="main">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+
+				<!-- Portfolio -->
+					<section>
+						<header class="major">
+							<h2>Кайсы тилде сүйлөшүүнү каалайсыз</h2>
+						</header>
+
+
+						<div class="row">
+							{% for category in categories %}
+							<div class="col-4 col-6-medium col-12-small">
+                                <section class="box" style="border-radius: 20px;">
+                                    <a href="{% url 'topic_list' category.id %}" class="button alt w-100 d-flex align-items-center justify-content-center">
+                                        <i class="fa fa-comments-o" aria-hidden="true"></i></i> {{ category.name }}
+                                    </a>
+                                </section>
+							</div>
+							{% endfor %}
+						</div>
+
+
+					</section>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
