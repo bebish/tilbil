@@ -61,6 +61,7 @@ class UserWeekRatingView(ListView):
 def profile_edit(request):
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
+        messages.success(request, 'Ийгиликтүү өзгөртүлдү!')
         if form.is_valid():
             form.save()
             return redirect('profile')  # Redirect to the profile page after saving changes
@@ -68,11 +69,6 @@ def profile_edit(request):
         form = ProfileEditForm(instance=request.user)
     return render(request, 'account/profile-edit.html', {'form': form})
 
-# class DeleteAccountView(SuccessMessageMixin, DeleteView):
-#     model = User
-#     template_name = 'delete-account.html'
-#     success_url = reverse_lazy('home')
-#     success_message = 'Ийгиликтүү өчүрүлдү!'
 
 @login_required
 def delete_account(request):

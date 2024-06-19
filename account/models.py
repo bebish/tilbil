@@ -11,6 +11,7 @@ class User(AbstractUser):
     strike = models.PositiveIntegerField(blank=True, default=0)
     strike_status = models.BooleanField(blank=True, default=False)
     last_lesson_date = models.DateField(null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
 
     # groups = models.ManyToManyField('auth.Group', related_name='custom_user_groups')
     # user_permissions = models.ManyToManyField('auth.Permission', related_name='custom_user_user_permissions')

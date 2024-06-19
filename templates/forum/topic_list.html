@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .chat-container {
+        width: 100%;
+        height: 80vh; /* Фиксированная высота чата */
+        background: #2e2e2e;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .chat-header {
+        background: white;
+        color: black;
+        padding: 15px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+    .chat-box {
+        flex-grow: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #1a1a1a;
+        border-bottom: 1px solid #444;
+    }
+    .message {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px; /* Увеличенный отступ */
+    }
+    .message .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #fff;
+        margin-right: 10px;
+        background-size: cover;
+        background-position: center;
+    }
+    .message .content {
+        background: #333;
+        border-radius: 20px;
+        padding: 10px 20px;
+        position: relative;
+        max-width: 70%;
+        color: #fff; /* Цвет текста белый */
+        word-wrap: break-word;
+    }
+    .message .content .meta {
+        font-size: 12px;
+        color: #bbb;
+        text-align: right;
+        margin-top: 2px; /* Уменьшенный отступ */
+    }
+    .message .content .meta .username {
+        font-weight: bold;
+        display: block;
+        margin-bottom: -10px; /* Уменьшенный отступ */
+    }
+    .message .content .meta .datetime {
+        display: block;
+    }
+    .message.user {
+        justify-content: flex-end;
+    }
+    .message.user .avatar {
+        order: 2;
+        margin-left: 10px;
+        margin-right: 0;
+    }
+    .message.user .content {
+        background: #333; /* Фон такой же, как у остальных сообщений */
+        color: #fff; /* Цвет текста белый */
+        text-align: right;
+    }
+    .message.user .content .meta .username {
+        display: none;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .message-form {
+        display: flex;
+        padding: 10px;
+        background: #2e2e2e;
+        border-top: 1px solid #444;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .message-form textarea {
+        flex-grow: 1;
+        padding: 8px;
+        border: none;
+        border-radius: 20px;
+        resize: none;
+        transition: all 0.3s;
+        background: #1a1a1a;
+        color: #ddd;
+        height: 40px;
+        font-size: 14px;
+    }
+    .message-form textarea:focus {
+        outline: none;
+        border: 1px solid #5bace2;
+    }
+    .message-form button {
+        padding: 0;
+        margin-left: 10px;
+        border: none;
+        background: black;
+        color: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+    }
+    .message-form button:hover {
+        background: #4a99cf;
+    }
+</style>
+
+<!-- Main -->
+<section style="background-color: #282b34;" id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 col-12-medium">
+                    <!-- Sidebar -->
+                    <section class="box" style="border-radius: 20px;">
+                        <ul class="list-group list-group-flush">
+                            {% for topic in topics %}
+                          <li class="list-group-item"><a href="{% url 'post_list' category.id topic.id %}" style="color: black; text-decoration: none;">{{ topic.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'create_topic' category.id %}" class="button alt w-100 d-flex align-items-center justify-content-center" style="margin-top:20px;">Жаңы тема кошуу</a>
+                        {% else %}
+                            <p style="margin-top:20px;">Сураныч, жаңы тема кошуу үчүн жеке аккаунтунузга кириниз<a href="{% url 'login' %}" class="button alt w-100 d-flex align-items-center justify-content-center">Кирүү</a></p>
+                        {% endif %}
+                    </section>
+
+            </div>
+
+            <div class="col-8 col-12-medium imp-medium">
+                <!-- Content -->
+                <div class="chat-container">
+                    <div class="chat-header">
+                        Тема танданыз
+                    </div>
+                    <div class="chat-box" id="chat-box">
+
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('message-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const messageInput = document.getElementById('message-input');
+        const messageText = messageInput.value.trim();
+        if (messageText) {
+            const form = e.target;
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const chatBox = document.getElementById('chat-box');
+                    const newMessage = document.createElement('div');
+                    newMessage.classList.add('message', 'user');
+                    const now = new Date();
+                    const date = now.toLocaleDateString('ru-RU').split('.').reverse().join('.');
+                    const time = now.toTimeString().split(' ')[0].slice(0, 5);
+                    newMessage.innerHTML = `
+                        <div class="avatar" style="background-image: url('{% if user.image %}{{ user.image.url }}{% else %}{% static 'default-avatar.png' %}{% endif %}');"></div>
+                        <div class="content">
+                            ${messageText}
+                            <div class="meta">
+                                <span class="datetime">${date}, ${time}</span>
+                            </div>
+                        </div>
+                    `;
+                    chatBox.appendChild(newMessage);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    messageInput.value = '';
+                } else {
+                    alert('Ошибка при отправке сообщения');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Ошибка при отправке сообщения');
+            });
+        }
+    });
+</script>
+
+{% endblock %}
+
+
+
+                <div class="col-4 col-12-medium">
+
+                    <!-- Sidebar -->
+                        <section class="box" style="border-radius: 20px;">
+                            <ul class="list-group list-group-flush">
+                                {% for topic in topics %}
+                              <li class="list-group-item"><a href="{% url 'post_list' category.id topic.id %}" style="color: black; text-decoration: none;">{{ topic.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'create_topic' category.id %}">Жаңы тема кошуу</a>
+                            {% else %}
+                                <p>Сураныч, жаңы тема кошуу үчүн жеке аккаунтунузга кириниз<a href="{% url 'login' %}">Кирүү</a></p>
+                            {% endif %}
+                        </section>
+
+                </div>

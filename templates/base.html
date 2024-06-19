@@ -21,15 +21,18 @@
         <nav id="nav">
             <ul>
                 <li {% if request.path == '/' %}class="current"{% endif %}><a href="/">Башкы бет</a></li>
-                <li {% if request.path == '/language/' %}class="current"{% endif %}><a href="/language/">Курстар</a></li>
+                <li {% if request.path|slice:":9" == "/language" or request.path|slice:":6" == "/level" %}class="current"{% endif %}><a href="/language/">Курстар</a></li>
                 <li {% if request.path == '/sounds/' %}class="current"{% endif %}><a href="/sounds/">Үндөр</a></li>
-                <li><a href="{% url 'user_ratings' %}">Рейтинг</a></li>
+                <li {% if request.path|slice:":6" == "/forum" %}class="current"{% endif %}><a href="/forum/">Форум</a></li>
+                <li {% if request.path == '/account/rating/' or request.path == '/account/week-rating/' %}class="current"{% endif %}><a href="{% url 'user_ratings' %}">Рейтинг</a></li>
                 {% if not request.user.is_authenticated %}
-                <li><a href="{% url 'login' %}">Кируу</a></li>
-                <li><a href="{% url 'register' %}">Катталуу</a></li>
+                <li {% if request.path == '/account/login/' %}class="current"{% endif %}><a href="{% url 'login' %}">Кируу</a></li>
+                <li {% if request.path == '/account/sign-up/' %}class="current"{% endif %}><a href="{% url 'register' %}">Катталуу</a></li>
                 {% else %}
-                <li><a href="{% url 'profile' %}">Профиль</a></li>
+                <li {% if request.path == '/account/myprofile/' %}class="current"{% endif %}><a href="{% url 'profile' %}">Профиль</a></li>
                 {% endif %}
+
+
             </ul>
         </nav>
 

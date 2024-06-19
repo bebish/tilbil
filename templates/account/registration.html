@@ -1,12 +1,28 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h1>Sign up</h1>
-<form class="container" style="width:700px;" method="post"  enctype="multipart/form-data">
+
+<style>
+    .errorlist {
+        color: red;
+        border: 1px solid red;
+        padding: 10px;
+        background-color: #fdd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+<h1>Регистрация</h1>
+<form class="container" style="width:700px;" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="p-3 mb-2 bg-light">
-    {{ form.as_p }}
+        {% if form.non_field_errors %}
+            <div class="errorlist">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        {{ form.as_p }}
     </div>
-    <button type="submit">Sign up</button>
+    <button type="submit">Катталуу</button>
 </form>
 {% endblock %}
